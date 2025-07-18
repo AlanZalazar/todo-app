@@ -25,7 +25,7 @@ export default function DarkMode() {
     <button
       id="darkmode"
       onClick={toggleTheme}
-      className="flex justify-end md:py-8   z-50 relative"
+      className="flex justify-end md:py-8 cursor-pointer  z-50 relative outline-none focus:outline-none focus:ring-0"
       title="Toggle theme"
       aria-label="Toggle theme"
     >
