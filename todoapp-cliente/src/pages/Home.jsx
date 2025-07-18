@@ -1,63 +1,29 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import CardsContainer from "../components/CardsContainer";
-import FormButton from "../components/FormButton";
-import NavBar from "../components/NavBar";
-import Title from "../components/Title";
-import { useStays } from "../hooks/useStays";
+import DarkMode from "../components/DarkMode";
+import Form from "../components/Form";
 
 export default function Home() {
-  const { stays, loading, filters, handleSearch, resetFilters } = useStays();
-  const location = useLocation();
-  const [message, setMessage] = useState(null);
-  const [currentOrder, setCurrentOrder] = useState("none");
-
-  useEffect(() => {
-    if (location.state?.message) {
-      setMessage(location.state.message);
-      const timer = setTimeout(() => setMessage(null), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [location.state]);
-
-  if (loading) {
-    return <div className="text-center py-8">Loading...</div>;
-  }
-
-  const sortedStays = [...stays].sort((a, b) => {
-    switch (currentOrder) {
-      case "az":
-        return a.title.localeCompare(b.title);
-      case "za":
-        return b.title.localeCompare(a.title);
-      case "rating_asc":
-        return a.rating - b.rating;
-      case "rating_desc":
-        return b.rating - a.rating;
-      default:
-        return 0;
-    }
-  });
-
   return (
-    <div className="min-h-screen dark:bg-slate-900">
-      {message && (
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50">
-          {message}
-        </div>
-      )}
+    <div className="min-h-screen bg-[#161722ff] flex flex-col items-center relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-[350px] bg-[#161722ff] z-0">
+        <img
+          src="./images/bg-desktop-dark.jpg"
+          alt="banner"
+          className="hidden md:block w-full h-full object-cover"
+        />
+        <img
+          src="./images/bg-mobile-dark.jpg"
+          alt="banner"
+          className="md:hidden w-full h-full object-cover"
+        />
+      </div>
 
-      <NavBar onSearch={handleSearch} currentFilters={filters} stays={stays} />
-      <Title
-        count={stays.length}
-        location={filters.location}
-        guests={filters.guests}
-        onReset={resetFilters}
-        onOrderChange={setCurrentOrder}
-        currentOrder={currentOrder}
-      />
-      <CardsContainer stays={sortedStays} />
-      <FormButton />
+      <div className="relative z-10 w-full max-w-[540px] px-4 pt-20 pb-10">
+        <Form />
+      </div>
+
+      <p className="text-[#4d5066ff] text-[18px] josefin mt-auto pb-10 z-10">
+        Funval - 2025
+      </p>
     </div>
   );
 }

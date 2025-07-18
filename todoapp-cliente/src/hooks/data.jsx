@@ -7,6 +7,11 @@ export const allTareas = async () => {
   return data;
 };
 
+export const tareaCreate = async (body) => {
+  const { data } = await axios.post(`${url}`, body);
+  return data;
+};
+
 export const tareaId = async (id) => {
   const data = await axios.get(`${url}${id}`);
   return data;
